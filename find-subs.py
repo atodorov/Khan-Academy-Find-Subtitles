@@ -29,7 +29,7 @@
 #
 ####################################################################
 
-
+import sys
 import json
 from httplib2 import Http
 from urllib import urlencode
@@ -38,7 +38,6 @@ from bs4 import BeautifulSoup
 in_data = open('videos.csv', 'r').read()
 h = Http()
 i = 0
-failed_videos = []
 
 # print CSV header
 print "I,PERCENT,VIDEO,CANONICAL,YOUTUBE,SUBTITLES"
@@ -102,10 +101,5 @@ for video_url in in_data.split("\n"):
                     # break the for lang loop
                     break
     except:
-        failed_videos.append(video_url)
+        print >> sys.stderr, "FAILED:", video_url
         continue
-
-# print failures at the end
-print "============= FAILED =============="
-for v in failed_videos:
-    print v
